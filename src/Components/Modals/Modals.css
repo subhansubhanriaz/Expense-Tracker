@@ -1,0 +1,434 @@
+/* .tag{
+  padding:4px 8px;
+  border-radius:8px;
+  font-size:12px;
+  color:white;
+}
+
+.tag.future{
+  background:#ff9800;
+}
+
+.tag.fraud{
+  background:#f44336;
+}
+
+.tag.normal{
+  background:#4caf50;
+}
+
+.btn-ok{
+  background:#4caf50;
+  border:none;
+  padding:6px 10px;
+  border-radius:6px;
+  color:white;
+  margin-right:5px;
+  cursor:pointer;
+}
+
+.btn-fraud{
+  background:#f44336;
+  border:none;
+  padding:6px 10px;
+  border-radius:6px;
+  color:white;
+  cursor:pointer;
+}
+.modal-overlay{
+ position:fixed;
+ top:0;
+ left:0;
+ width:100%;
+ height:100%;
+ background:rgba(0,0,0,0.4);
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ z-index:999;
+} */
+ /* ============================================================
+   FINTRACK — Modals.css
+   Covers: SignIn/SignUp modal, Notification table modal,
+           Transaction form modal, Fraud tags & verify buttons,
+           Auth alerts, Close button, Dark mode support
+
+   Dark mode tokens live in Layouts.css (.dark-mode on <body>).
+   DO NOT merge this file into Layouts.css.
+   ============================================================ */
+
+/* ══════════════════════════════════════════════════════════════
+   MODAL OVERLAY
+══════════════════════════════════════════════════════════════ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 11, 20, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  padding: 20px;
+  animation: overlayFadeIn 0.22s ease;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Large variant — NotificationPage */
+.modal-overlay.large {
+  align-items: flex-start;
+  padding-top: 48px;
+  overflow-y: auto;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MODAL CARD
+══════════════════════════════════════════════════════════════ */
+.modal-card {
+  background: var(--bg-card);
+  border-radius: 20px;
+  border: 1px solid var(--border-strong);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.22),
+    0 8px 20px rgba(0, 0, 0, 0.12);
+  padding: 32px 28px;
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  animation: modalSlideIn 0.26s cubic-bezier(0.34, 1.2, 0.64, 1);
+  transition:
+    background var(--transition, 0.22s ease),
+    border-color var(--transition, 0.22s ease);
+}
+
+/* Wide variant for notification / table modals */
+.modal-card.large,
+.modal-overlay.large .modal-card {
+  max-width: 920px;
+  padding: 28px 24px;
+}
+
+@keyframes modalSlideIn {
+  from { opacity: 0; transform: translateY(-20px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-card h2 {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.3px;
+  margin-bottom: 22px;
+  transition: color var(--transition, 0.22s ease);
+}
+
+/* ── Close button ─────────────────── */
+.close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-strong);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  line-height: 1;
+  transition:
+    background 0.18s,
+    color 0.18s,
+    border-color 0.18s,
+    transform 0.14s;
+}
+.close-btn:hover {
+  background: var(--red-soft);
+  color: var(--red);
+  border-color: var(--red);
+  transform: scale(1.08) rotate(8deg);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   AUTH MODAL  (SignInSignUpModal.jsx)
+══════════════════════════════════════════════════════════════ */
+.auth-card { max-width: 400px; }
+
+/* Alert banner */
+.auth-alert {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 18px;
+  line-height: 1.5;
+  transition:
+    background var(--transition, 0.22s ease),
+    color var(--transition, 0.22s ease);
+}
+
+.auth-alert.success {
+  background: var(--green-soft);
+  color: var(--green-mid);
+  border: 1px solid rgba(16, 185, 129, 0.22);
+}
+
+.auth-alert.error {
+  background: var(--red-soft);
+  color: var(--red-mid);
+  border: 1px solid rgba(239, 68, 68, 0.22);
+}
+
+/* Form wrapper */
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Auth inputs */
+.auth-card input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border-strong);
+  background: var(--bg-input);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 13.5px;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  transition:
+    border-color 0.18s,
+    background var(--transition, 0.22s ease),
+    color var(--transition, 0.22s ease),
+    box-shadow 0.18s;
+}
+.auth-card input::placeholder { color: var(--text-muted); }
+.auth-card input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.14);
+  background: var(--bg-card);
+}
+
+/* Primary submit button */
+.auth-btn {
+  width: 100%;
+  padding: 11px;
+  margin-top: 4px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.38);
+  transition: opacity 0.18s, transform 0.12s, box-shadow 0.18s;
+}
+.auth-btn:hover  { opacity: 0.90; box-shadow: 0 6px 22px rgba(59,130,246,0.48); }
+.auth-btn:active { transform: scale(0.985); }
+
+/* Toggle link */
+.toggle-link {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--blue);
+  cursor: pointer;
+  font-weight: 600;
+  transition: opacity 0.18s;
+}
+.toggle-link:hover { opacity: 0.70; text-decoration: underline; }
+
+/* ══════════════════════════════════════════════════════════════
+   NOTIFICATION MODAL  (NotificationPage.jsx)
+══════════════════════════════════════════════════════════════ */
+
+/* Scrollable table container */
+.excel-table {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  transition: border-color var(--transition, 0.22s ease);
+}
+
+.excel-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  color: var(--text-primary);
+  transition: color var(--transition, 0.22s ease);
+}
+
+.excel-table thead th {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  padding: 11px 14px;
+  text-align: left;
+  background: var(--bg-surface);
+  border-bottom: 1.5px solid var(--border-strong);
+  white-space: nowrap;
+  transition:
+    background var(--transition, 0.22s ease),
+    color var(--transition, 0.22s ease),
+    border-color var(--transition, 0.22s ease);
+}
+
+.excel-table tbody td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+  vertical-align: middle;
+  white-space: nowrap;
+  transition:
+    border-color var(--transition, 0.22s ease),
+    color var(--transition, 0.22s ease),
+    background var(--transition, 0.22s ease);
+}
+.excel-table tbody tr:last-child td { border-bottom: none; }
+.excel-table tbody tr:hover td      { background: var(--bg-surface); }
+
+/* Spam / fraud row */
+.excel-table .spam-row td {
+  background: var(--red-soft) !important;
+}
+
+/* Amount cell colors — these MUST be explicit so dark mode tokens apply */
+.excel-table .income  { color: var(--green) !important; font-weight: 600; }
+.excel-table .expense { color: var(--red)   !important; font-weight: 600; }
+
+/* Empty state */
+.excel-table td[colspan] {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 28px 14px;
+  font-size: 13px;
+  transition: color var(--transition, 0.22s ease);
+}
+
+/* ── Notification tags ───────────────
+   FIX: No more hardcoded `color: white`.
+   Soft tinted backgrounds with matching text are legible in both modes.
+────────────────────────────────────── */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.tag.normal {
+  background: var(--green-soft);
+  color: var(--green-mid);
+}
+
+.tag.fraud {
+  background: var(--red-soft);
+  color: var(--red-mid);
+}
+
+.tag.future {
+  background: var(--orange-soft);
+  color: var(--orange);
+}
+
+/* ── Verify buttons ──────────────────
+   FIX: Replaced solid white-text buttons — they disappeared on dark cards.
+   Now uses soft fills that flip correctly with dark mode tokens.
+────────────────────────────────────── */
+.btn-ok {
+  background: var(--green-soft);
+  color: var(--green-mid);
+  border: 1.5px solid transparent;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-right: 6px;
+  transition: background 0.18s, color 0.18s, transform 0.12s;
+}
+.btn-ok:hover {
+  background: var(--green);
+  color: #ffffff;
+  transform: scale(1.04);
+}
+
+.btn-fraud {
+  background: var(--red-soft);
+  color: var(--red-mid);
+  border: 1.5px solid transparent;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, transform 0.12s;
+}
+.btn-fraud:hover {
+  background: var(--red);
+  color: #ffffff;
+  transform: scale(1.04);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   DARK MODE — modal-specific surface patches
+   (Token overrides live in Layouts.css .dark-mode block)
+══════════════════════════════════════════════════════════════ */
+
+.dark-mode .modal-card {
+  background: var(--bg-card);
+  border-color: var(--border-strong);
+}
+
+.dark-mode .auth-card input {
+  background: var(--bg-input);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+.dark-mode .auth-card input::placeholder {
+  color: var(--text-muted);
+}
+
+.dark-mode .excel-table thead th {
+  background: var(--bg-surface);
+}
+
+.dark-mode .excel-table .spam-row td {
+  background: rgba(248, 113, 113, 0.10) !important;
+}
+
+.dark-mode .close-btn {
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  border-color: var(--border-strong);
+}
+
+/* Ensure notification table text is visible in dark mode */
+.dark-mode .excel-table tbody td,
+.dark-mode .excel-table table {
+  color: var(--text-primary);
+}
